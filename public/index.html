@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <title>WebRTC Video Conference Tutorial - Plain WebRTC</title>
+</head>
+<body>
+    <h1>WebRTC Video Conference Tutorial - Plain WebRTC</h1>
+
+    <div id="RoomSelection">
+        <label>Type the room number</label>
+        <input id="roomNumber" type="text" />
+        <button id="goRoom">Enter</button>
+    </div>
+
+    <div id="consultingRoom" style="display:none">
+        <video id="localVideo" autoplay></video>
+        <video id="remoteVideo1" autoplay></video><br>
+        <video id="remoteVideo2" autoplay></video>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="MultiStreamsMixer.js"></script>
+    <script src="client.js"></script>
+</body>
