@@ -130,8 +130,8 @@ document.getElementById("btnCopy").onclick = () => {
 socket.on('user-disconnected', (userId) => {
     console.log(`User ${userId} disconnected`);
 
-    const video = document.getElementById(`video-${userId}`);
-    if (video) video.remove();
+    const videoBox = document.querySelector(`#video-${userId}`)?.closest('.video-box');
+    if (videoBox) videoBox.remove();
 
     if (peers[userId]) {
         peers[userId].close();
