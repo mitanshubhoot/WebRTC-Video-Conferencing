@@ -1,23 +1,32 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>WebRTC Video Conference Tutorial - Plain WebRTC</title>
+    <meta charset="UTF-8" />
+    <title>WebRTC Video Conference</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>WebRTC Video Conference Tutorial - Plain WebRTC</h1>
+    <h1>🔗 WebRTC Video Chat</h1>
 
     <div id="selectRoom">
-        <label>Type the room number</label>
-        <input id="roomNumber" type="text" />
-        <button id="goRoom">Enter</button>
+        <div class="card">
+            <h2>Enter Room</h2>
+            <input id="roomNumber" type="text" placeholder="e.g. my-room-123" />
+            <button id="goRoom">Join Room</button>
+        </div>
     </div>
 
-    <div id="consultingRoom" style="display:none">
-        <video id="localVideo" autoplay></video>
-        <video id="remoteVideo1" autoplay></video><br>
-        <video id="remoteVideo2" autoplay></video>
+    <div id="consultingRoom" style="display: none;">
+        <div class="video-grid">
+            <div class="video-box">
+                <p><strong>You</strong></p>
+                <video id="localVideo" autoplay muted playsinline></video>
+            </div>
+            <!-- Remote videos will be appended here -->
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="MultiStreamsMixer.js"></script>
     <script src="client.js"></script>
 </body>
+</html>
