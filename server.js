@@ -1,73 +1,70 @@
-//requires
 const express = require('express');
 const app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var room_owner;
-var new_client;
-var numClients;
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 const port = process.env.PORT || 3000;
 
-// express routing
 app.use(express.static('public'));
 
+const rooms = {};  // Track clients in each room
 
-// signaling
-io.on('connection', function (socket) {
-    console.log('a user connected');
+io.on('connection', (socket) => {
+    console.log('A user connected:', socket.id);
 
-    socket.on('create or join', function (room) {
-        console.log('create or join to room ', room);
-        
-        var myRoom = io.sockets.adapter.rooms[room] || { length: 0 };
-        numClients = myRoom.length;
-
-        console.log(room, ' has ', numClients, ' clients');
-
-        if (numClients == 0) {
-            socket.join(room);
-            room_owner = socket.id;
-            socket.emit('created', room);
-        } else if (numClients <= 2) {
-            socket.join(room);
-            //socket.emit('joined', room);
-            new_client = socket.id;
-            io.to(room_owner).emit('owner', room);
-            io.to(new_client).emit('joined', room);
-            console.log('Owner: ', room_owner);
-        } else {
-            socket.emit('full', room);
+    socket.on('create or join', (room) => {
+        if (!rooms[room]) {
+            rooms[room] = [];
         }
+
+        rooms[room].push(socket.id);
+        socket.join(room);
+
+        const otherClients = rooms[room].filter(id => id !== socket.id);
+        console.log(`User ${socket.id} joined room ${room}. Others:`, otherClients);
+
+        socket.emit('all-users', otherClients);
+
+        otherClients.forEach(clientId => {
+            io.to(clientId).emit('new-user', socket.id);
+        });
     });
 
-    socket.on('ready', function (room){
-        socket.broadcast.to(room).emit('ready');
-        //io.to(room_owner).emit('ready');
-        //io.to(socket.id).emit('ready');
+    socket.on('offer', (data) => {
+        io.to(data.target).emit('offer', {
+            sdp: data.sdp,
+            sender: socket.id
+        });
     });
 
-    socket.on('candidate', function (event){
-        socket.broadcast.to(event.room).emit('candidate', event,numClients);
-        //io.to(room_owner).emit('candidate', event);
-        //io.to(socket.id).emit('candidate', event);
+    socket.on('answer', (data) => {
+        io.to(data.target).emit('answer', {
+            sdp: data.sdp,
+            sender: socket.id
+        });
     });
 
-    socket.on('offer', function(event){
-        //socket.broadcast.to(event.room).emit('offer',event.sdp,numClients);
-        //io.to(room_owner).emit('offer',event.sdp,numClients);
-        io.to(new_client).emit('offer',event.sdp,numClients);
+    socket.on('candidate', (data) => {
+        io.to(data.target).emit('candidate', {
+            candidate: data.candidate,
+            sender: socket.id
+        });
     });
 
-    socket.on('answer', function(event){
-        //socket.broadcast.to(event.room).emit('answer',event.sdp,numClients);
-        io.to(room_owner).emit('answer',event.sdp,numClients);
-        //io.to(new_client).emit('answer',event.sdp,numClients);
+    socket.on('disconnect', () => {
+        for (let room in rooms) {
+            if (rooms[room].includes(socket.id)) {
+                rooms[room] = rooms[room].filter(id => id !== socket.id);
+                socket.to(room).emit('user-disconnected', socket.id);
+                if (rooms[room].length === 0) {
+                    delete rooms[room];
+                }
+            }
+        }
+        console.log('User disconnected:', socket.id);
     });
-
 });
 
-// listener
-http.listen(port || 3000, function () {
-    console.log('listening on', port);
+http.listen(port, () => {
+    console.log('Server listening on port', port);
 });
