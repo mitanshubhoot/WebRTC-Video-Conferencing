@@ -53,7 +53,7 @@ btnGoRoom.onclick = function () {
 socket.on('created', function (room) {
     navigator.mediaDevices.getUserMedia(streamConstraints).then(function (stream) {
         localStream = stream;
-        mixer = new MultiStreamsMixer([localStream,localStream]);
+        mixer = new MultiStreamsMixer([localStream]);
         mixer.frameInterval = 1;
         mixer.startDrawingFrames();
         localVideo.srcObject = mixer.getMixedStream();
