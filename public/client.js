@@ -114,7 +114,11 @@ function createPeerConnection(userId) {
     };
 
     pc.ontrack = (event) => {
+        // Avoid duplicate video elements
+        if (document.getElementById(`video-${userId}`)) return;
+
         const remoteVideo = document.createElement('video');
+        remoteVideo.id = `video-${userId}`;
         remoteVideo.srcObject = event.streams[0];
         remoteVideo.autoplay = true;
         remoteVideo.playsInline = true;
