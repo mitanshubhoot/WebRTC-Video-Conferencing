@@ -100,6 +100,18 @@ socket.on('candidate', (data) => {
     peers[data.sender].addIceCandidate(new RTCIceCandidate(data.candidate));
 });
 
+socket.on('user-disconnected', (userId) => {
+    console.log(`User ${userId} disconnected`);
+
+    const video = document.getElementById(`video-${userId}`);
+    if (video) video.remove();
+
+    if (peers[userId]) {
+        peers[userId].close();
+        delete peers[userId];
+    }
+});
+
 // Create peer connection
 function createPeerConnection(userId) {
     const pc = new RTCPeerConnection(configuration);
