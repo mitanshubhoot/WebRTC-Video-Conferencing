@@ -6,6 +6,10 @@ const inputRoomNumber = document.getElementById("roomNumber");
 const btnGoRoom = document.getElementById("goRoom");
 const selectRoom = document.getElementById("selectRoom");
 
+let isMuted = false;
+let isCameraOff = false;
+let roomNumber = "";
+
 const peers = {};
 let localStream;
 
@@ -20,7 +24,7 @@ const configuration = {
 const streamConstraints = { audio: true, video: true };
 
 btnGoRoom.onclick = () => {
-    const roomNumber = inputRoomNumber.value.trim();
+    roomNumber = inputRoomNumber.value.trim();
     if (!roomNumber) {
         alert("Please enter a room number");
         return;
@@ -29,6 +33,8 @@ btnGoRoom.onclick = () => {
     selectRoom.style.display = "none";
     consultingRoom.style.display = "block";
 
+    document.getElementById("roomInfo").innerText = `Room: ${roomNumber}`;
+    
     navigator.mediaDevices.getUserMedia(streamConstraints).then(stream => {
         localStream = stream;
         localVideo.srcObject = stream;
@@ -100,6 +106,27 @@ socket.on('candidate', (data) => {
     peers[data.sender].addIceCandidate(new RTCIceCandidate(data.candidate));
 });
 
+document.getElementById("btnMute").onclick = () => {
+    if (!localStream) return;
+    isMuted = !isMuted;
+    localStream.getAudioTracks()[0].enabled = !isMuted;
+    document.getElementById("btnMute").innerText = isMuted ? "🔈 Unmute" : "🔇 Mute";
+};
+
+document.getElementById("btnCamera").onclick = () => {
+    if (!localStream) return;
+    isCameraOff = !isCameraOff;
+    localStream.getVideoTracks()[0].enabled = !isCameraOff;
+    document.getElementById("btnCamera").innerText = isCameraOff ? "📷 Start Camera" : "🎥 Stop Camera";
+};
+
+document.getElementById("btnCopy").onclick = () => {
+    const url = `${window.location.origin}?room=${roomNumber}`;
+    navigator.clipboard.writeText(url).then(() => {
+        alert("Room link copied to clipboard!");
+    });
+};
+
 socket.on('user-disconnected', (userId) => {
     console.log(`User ${userId} disconnected`);
 
@@ -141,3 +168,13 @@ function createPeerConnection(userId) {
 
     return pc;
 }
+
+window.onload = () => {
+    const params = new URLSearchParams(window.location.search);
+    const roomFromURL = params.get('room');
+    if (roomFromURL) {
+        inputRoomNumber.value = roomFromURL;
+        btnGoRoom.click();
+    }
+};
+
