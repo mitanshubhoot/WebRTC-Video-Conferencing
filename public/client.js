@@ -159,11 +159,16 @@ function createPeerConnection(userId) {
         const remoteVideo = document.createElement('video');
         remoteVideo.id = `video-${userId}`;
         remoteVideo.srcObject = event.streams[0];
-        remoteVideo.autoplay = true;
-        remoteVideo.playsInline = true;
-        remoteVideo.style.width = "300px";
-        remoteVideo.style.margin = "10px";
-        consultingRoom.appendChild(remoteVideo);
+    remoteVideo.autoplay = true;
+    remoteVideo.playsInline = true;
+    remoteVideo.classList.add("remoteVideo");
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "video-box";
+    wrapper.innerHTML = `<p class="label">Peer</p>`;
+    wrapper.appendChild(remoteVideo);
+
+    document.querySelector(".video-grid").appendChild(wrapper);
     };
 
     return pc;
