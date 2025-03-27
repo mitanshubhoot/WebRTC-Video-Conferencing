@@ -10,6 +10,7 @@
   <div class="background-grid"></div>
 
   <div id="app">
+    <!-- 🚀 Hero Section -->
     <section class="hero" id="selectRoom">
       <p class="tagline">🧠 Smart Video Calls, Simple Setup</p>
       <h1><span class="fade">Instant Room,</span> Real-Time Chat</h1>
@@ -24,30 +25,8 @@
 
       <p class="utility">💸 Zero server cost • Runs fully in your browser • Instant peer-to-peer video</p>
     </section>
-    <section class="features">
-  <h2>Why Use This App?</h2>
-  <p class="feature-subtext">Experience hassle-free video calls with no backend setup or server cost.</p>
 
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="icon">🧠</div>
-      <h3>Serverless Simplicity</h3>
-      <p>No server needed. Runs 100% in your browser with peer-to-peer WebRTC technology.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🔐</div>
-      <h3>End-to-End Privacy</h3>
-      <p>Your calls stay private — no middleman servers, no storage, no tracking.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🌍</div>
-      <h3>Global Access</h3>
-      <p>Connect instantly across the world. Works on any device with just a link.</p>
-    </div>
-  </div>
-</section>
-
-    <!-- Video Room Section (rendered after join) -->
+    <!-- 🎥 In-Call Section (Visible After Join) -->
     <section id="consultingRoom" style="display:none;">
       <div class="top-bar">
         <span id="roomInfo">Room:</span>
@@ -63,7 +42,31 @@
           <p class="label">You</p>
           <video id="localVideo" autoplay muted playsinline></video>
         </div>
-        <!-- Remote peer videos will be appended here -->
+        <!-- Remote peer videos will be injected here -->
+      </div>
+    </section>
+
+    <!-- 🧩 Feature Highlights -->
+    <section class="features">
+      <h2>Why Use This App?</h2>
+      <p class="feature-subtext">Experience hassle-free video calls with no backend setup or server cost.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">🧠</div>
+          <h3>Serverless Simplicity</h3>
+          <p>No server needed. Runs 100% in your browser with peer-to-peer WebRTC technology.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔐</div>
+          <h3>End-to-End Privacy</h3>
+          <p>Your calls stay private — no middleman servers, no storage, no tracking.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🌍</div>
+          <h3>Global Access</h3>
+          <p>Connect instantly across the world. Works on any device with just a link.</p>
+        </div>
       </div>
     </section>
   </div>
