@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>WebRTC Video Chat</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC Video Chat</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="background-grid"></div>
+  <div class="background-grid"></div>
 
-    <div id="app">
-        <section class="hero" id="selectRoom">
-            <h1><span class="bold">Start a Room</span></h1>
-            <p class="subtext">Join or create a video chat room with anyone, anywhere.</p>
-            <input id="roomNumber" type="text" placeholder="Enter room name (e.g. my-room)" />
-            <button id="goRoom">Join Now →</button>
-        </section>
+  <div id="app">
+    <section class="hero" id="selectRoom">
+      <p class="tagline">🧠 Smart Video Calls, Simple Setup</p>
+      <h1><span class="fade">Instant Room,</span> Real-Time Chat</h1>
+      <p class="subtext">
+        Create or join a private video room in seconds. No sign-up. No hassle. Just click and go.
+      </p>
 
-        <section id="consultingRoom" style="display:none;">
-            <div class="top-bar">
-                <span id="roomInfo">Room:</span>
-                <div class="controls">
-                    <button id="btnMute">🔇</button>
-                    <button id="btnCamera">🎥</button>
-                    <button id="btnCopy">🔗</button>
-                </div>
-            </div>
-            <div class="video-grid">
-                <div class="video-box">
-                    <p class="label">You</p>
-                    <video id="localVideo" autoplay muted playsinline></video>
-                </div>
-                <!-- Remote peers will be injected here -->
-            </div>
-        </section>
-    </div>
+      <div class="input-group">
+        <input id="roomNumber" type="text" placeholder="e.g. dev-team-standup" />
+        <button id="goRoom">🚀 Join Now</button>
+      </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="client.js"></script>
+      <p class="utility">💸 Zero server cost • Runs fully in your browser • Instant peer-to-peer video</p>
+    </section>
+
+    <!-- Video Room Section (rendered after join) -->
+    <section id="consultingRoom" style="display:none;">
+      <div class="top-bar">
+        <span id="roomInfo">Room:</span>
+        <div class="controls">
+          <button id="btnMute">🔇</button>
+          <button id="btnCamera">🎥</button>
+          <button id="btnCopy">🔗</button>
+        </div>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-box">
+          <p class="label">You</p>
+          <video id="localVideo" autoplay muted playsinline></video>
+        </div>
+        <!-- Remote peer videos will be appended here -->
+      </div>
+    </section>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
 </body>
 </html>
