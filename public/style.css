@@ -1,123 +1,141 @@
-/* Reset & Base */
+/* ===== Global Reset ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+html, body {
     font-family: 'Segoe UI', sans-serif;
-    background: #1e1e2f;
-    color: #eee;
+    background: #f7f9fc;
+    color: #111;
     min-height: 100vh;
-    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
 }
 
-header {
+.background-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px),
+                      linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+    max-width: 600px;
+    margin: 100px auto 60px auto;
     text-align: center;
+    padding: 40px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.bold {
+    color: #111;
+}
+
+.subtext {
+    font-size: 16px;
+    color: #666;
     margin-bottom: 30px;
 }
 
-h1 {
-    color: #f9f9f9;
-    font-size: 2rem;
-    letter-spacing: 1px;
-}
-
-.card {
-    background: #2c2c3e;
+.hero input {
+    padding: 14px;
+    font-size: 16px;
+    width: 80%;
     max-width: 400px;
-    margin: auto;
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    text-align: center;
-}
-
-.card input {
-    padding: 12px;
-    margin-top: 20px;
-    width: 100%;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background: #444;
-    color: #fff;
-}
-
-.card button {
-    padding: 12px 25px;
-    margin-top: 20px;
-    background: #4caf50;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.card button:hover {
-    background: #45a049;
-}
-
-/* In-Room Layout */
-.toolbar {
-    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #ccc;
     margin-bottom: 20px;
 }
 
-.toolbar button {
-    background: #3a3a4d;
+.hero button {
+    background: #111;
+    color: white;
+    padding: 14px 28px;
     border: none;
-    padding: 10px 18px;
-    margin: 6px;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #fff;
+    border-radius: 12px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 0.3s ease;
 }
 
-.toolbar button:hover {
-    background: #55556b;
+.hero button:hover {
+    background: #333;
+}
+
+/* ===== Video Chat Section ===== */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
 #roomInfo {
-    display: block;
-    margin-top: 10px;
-    color: #ccc;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
-/* Video Grid */
+.controls button {
+    margin-left: 10px;
+    font-size: 16px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #e0e0e0;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background: #ccc;
+}
+
+/* ===== Video Grid ===== */
 .video-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    padding: 30px;
+    gap: 24px;
+    padding: 40px 20px;
 }
 
 .video-box {
-    background: #2b2b3c;
-    padding: 10px;
-    border-radius: 10px;
     text-align: center;
+    background: #fff;
+    padding: 12px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+}
+
+.video-box:hover {
+    transform: scale(1.02);
+}
+
+.label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 6px;
 }
 
 video {
-    width: 380px;    /* previously 300px */
-    max-width: 90vw;
+    width: 340px;
     height: auto;
     border-radius: 12px;
-    border: 2px solid #444;
     background: black;
-}
-
-
-.label {
-    margin: 5px 0;
-    color: #ccc;
-    font-size: 14px;
+    border: 1px solid #ddd;
 }
