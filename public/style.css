@@ -175,3 +175,63 @@ video {
   background: black;
   border: 1px solid #ddd;
 }
+
+.features {
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 36px;
+  color: #1c1e21;
+  margin-bottom: 10px;
+}
+
+.feature-subtext {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  justify-content: center;
+}
+
+.feature-card {
+  background: #fff;
+  padding: 28px 24px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  text-align: left;
+  transition: transform 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+.icon {
+  font-size: 30px;
+  background: #f1f4f8;
+  padding: 10px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+.feature-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.5;
+}
